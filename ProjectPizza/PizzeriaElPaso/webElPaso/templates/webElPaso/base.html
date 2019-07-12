@@ -1,0 +1,224 @@
+<html>
+<head>
+
+  {% load static %}
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'webElPaso/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'webElPaso/shop-homepage.css'%}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'webElPaso/styles.css'%}">
+  <script type="text/javascript" src="myscripts.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 40%;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons   {% static 'webElPaso/images/Inicio.jpeg' %} */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.jumbotron {
+   background: url('{% static 'webElPaso/images/Inicio.jpeg' %}') center center / cover no-repeat;
+   margin-bottom: 0px;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   background-size: cover;
+   -o-background-size: cover;
+}
+
+.ir-arriba{
+  display:none;
+  background-repeat:no-repeat;
+  font-size:20px;
+  color:black;
+  cursor:pointer;
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  z-index:2;
+}
+
+</style>
+</head>
+<body>
+
+    {% block body0 %}
+    {% endblock %}
+  <div class="jumbotron text-center">
+    <h1 style="font-family:cursive; font-style: oblique; color: #FFBB21;">PIZZA EL PASO</h1>
+    <h2 style="font-family:cursive; font-style: oblique; color: #FFBB21;">NO VIVÁS CON HAMBRE, VIVÍ CON PIZZA<h2> 
+  </div>
+
+   <!-- Navigation -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img src="{% static 'webElPaso/images/Pizza_El_Parque-logo.png'%}" width="100" height="60" border="0"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'index' %}">Productos
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart' %}">Carrito</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contáctenos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'nosotros' %}">Sobre Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-warning open-button" onclick="openForm()"><i class='fas fa-glasses' style='font-size:36px;'></i></i></button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </nav>
+      <div class="form-popup" id="myForm">
+  <div class="form-container">
+    <select id="selectedContrast" class="btn btn-warning">
+          <option value="normal">NORMAL</option>
+          <option value="warm">CÁLIDO</option>          
+          <option value="gray">NEBLINA</option>
+          <option value="inverted">INVERTIDO</option>
+      </select>
+      <button class="btn btn-warning" id="AdjustContrast" onclick="changeTheme()">Ajustar Contraste</button>
+
+      <select id="selectedTextSize" class="btn btn-warning">
+        <option value="1">Incrementar Letra</option>
+        <option value="-1">Reducir Letra</option>
+      </select>
+      <button class="btn btn-warning" id="ApplyChanges"onclick="resizeText()">Aplicar Cambios</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">CERRAR</button>
+  </div>
+
+</div>
+<a class="ir-arriba"  javascript:void(0) title="Volver arriba">
+  <span class="fa-stack">
+    <i class="fa fa-circle fa-stack-2x"></i>
+    <i class="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+  </span>
+</a>
+  {% block body %}
+  {% endblock %}
+</body>
+
+<script>
+
+  $(document).ready(function(){ //Hacia arriba
+  irArriba();
+});
+
+function irArriba(){
+  $('.ir-arriba').click(function(){ $('body,html').animate({ scrollTop:'0px' },1000); });
+  $(window).scroll(function(){
+    if($(this).scrollTop() > 0){ $('.ir-arriba').slideDown(600); }else{ $('.ir-arriba').slideUp(600); }
+  });
+  $('.ir-abajo').click(function(){ $('body,html').animate({ scrollTop:'1000px' },1000); });
+}
+
+
+  function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}    function resizeText() {
+    var e = document.getElementById("selectedTextSize");
+    var multiplier = e.options[e.selectedIndex].value;
+    if ((document.body.style.fontSize != "2em" && multiplier == 1) || (document.body.style.fontSize != "1em" && multiplier == -1)) {   
+         if (document.body.style.fontSize == "") {
+             document.body.style.fontSize = "1.0em";
+            }
+            document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+    }else {
+      alert("Límite de tamaño excedido");   
+ }
+    }
+
+function changeTheme(){
+            var selected = document.getElementById("selectedContrast");
+             var tone = selected.options[selected.selectedIndex].value;
+             switch(tone) {
+                        case "gray":                   
+                            document.body.style.filter = "contrast(50%)";                                                   
+                            break;
+                        case "inverted":
+                            document.body.style.filter = "invert(100%)"; 
+                            break;
+                        case "normal":                   
+                            document.body.style.filter = "contrast(100%)"; 
+                            document.body.style.filter = "invert(0%)";   
+                            document.body.style.filter = "sepia(0%)";                  
+                            break;
+                        case "warm":
+                            document.body.style.filter = "sepia(100%)";
+                            break;                              
+                }
+
+            }
+</script>
+</html>
+
+     

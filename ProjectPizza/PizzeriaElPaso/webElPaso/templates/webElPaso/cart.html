@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'webElPaso/base.html' %}
+<html>
+<head>
+</head>
+<body>
+  {% block body %}
+  
+    <h1>{{message}}</h1>
+    <div class="col-lg-9">
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tamaño</th>
+        <th>Cantidad</th>
+        <th>SubTotal</th>
+      </tr>
+    </thead
+    <tbody>
+      {% for item in listProduct %}
+      <tr>
+        {% with product=item.product %}
+          <td>{{product.name}} </td>
+          <td>{{item.sizes}} </td>
+          <td>{{item.quantity}} </td>
+          <td>{{item.price}}</td>
+        {% endwith %}
+      </tr>
+      {% endfor%}
+      <tr class="subtotal">
+              <td></td>
+              <td></td>
+              <td><strong>Total</strong></td> 
+              <td>{{ listProduct.get_total_price }}</td>
+            </tr>
+            <tr class="btn-outline-primary">
+              <td></td>
+              <td><a class="btn btn-primary" href="{% url 'index' %}">Seguir Comprando</a></td> 
+              <td><a class="btn btn-primary" onclick="transactionTermined()" href="{% url 'order_create' %}">Pagar</a></td>
+              <td></td> 
+            </tr>
+    </tbody>
+  </table>
+  </div>
+  <script type="text/javascript">
+    function transactionTermined() {
+      alert("Su compra se ha realizado con exito, su orden llegara en cualquier momento");
+    }
+  </script>
+  {% endblock %}
+</body>
+</html>
